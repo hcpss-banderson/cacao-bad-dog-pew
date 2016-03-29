@@ -1,0 +1,46 @@
+---
+- name: See if we have databases to import
+  stat: path=/vagrant/src/databases/{{ item }}.sql.gz
+  with_items: "{{ schools }}"
+  register: dbimports
+
+# Install Drupal via drush. Notice that we are using the config_installer
+# profile. This allows us to install Drupal from preexisting configuration.
+#
+# Also, note that we are setting the permissions to settings.php to 777 
+# before attempting the install. This is because even though our 
+# settings.php file is complete, Drupal still wants write access to it 
+# durring install and then sets it to read only after install.
+- name: Install drupal        
+  shell: "docker run --rm \
+    --volumes-from code \
+    debian:jessie \
+      chmod 777 /var/www/drupal/web/sites/default/settings.php \
+    && drush @{{ item.item }} \
+      si config_installer -y \
+      --account-mail=bander2.imda@gmail.com \
+      --account-name=admin \
+      --account-pass=admin \
+      --site-mail=bander2.imda@gmail.com \
+      config_installer_sync_configure_form.sync_directory=/var/www/drupal/config/sync"
+  with_items: "{{ dbimports.results }}"
+  when: item.stat.exists == False
+
+# We have a database dump to import for this site
+- name: Create the drupal database
+  shell: drush @{{ item.item }} sql-create -y
+  with_items: "{{ dbimports.results }}"
+  when: item.stat.exists
+
+- name: Import the databases
+  shell: zcat /vagrant/src/databases/{{ item.item }}.sql.gz | docker exec -i {{ item.item }}_db mysql -u root -proot drupal
+  with_items: "{{ dbimports.results }}"
+  when: item.stat.exists
+
+# Since we imported the database, we need to make sure we have an admin 
+# account for us to use.
+- name: Update the admin passwords
+  command: drush @{{ item.item }} upwd --password="admin" "admin"
+  with_items: "{{ dbimports.results }}"
+  when: item.stat.exists
+  ignore_errors: yes

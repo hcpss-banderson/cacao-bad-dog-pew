@@ -1,0 +1,6 @@
+---
+# Use the magic of docker to use composer, drush and drupal-console without
+# actually having to install them.
+- name: Alias utilites to docker containers
+  copy: src=scripts/{{ item }} dest=/usr/local/bin/{{ item }} mode="u+x"
+  with_items: ["composer", "drush", "drupal"]

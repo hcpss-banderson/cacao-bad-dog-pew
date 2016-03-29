@@ -1,0 +1,5 @@
+- name: Install pip
+  apt: name=python-pip update_cache=yes
+
+- name: Install docker-py via pip
+  pip: name=docker-py

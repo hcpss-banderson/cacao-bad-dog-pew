@@ -1,0 +1,12 @@
+---
+# Start the PHP-FPM containers
+- name: Start the PHP containers
+  docker:
+    name: "{{ item }}_php"
+    image: bander2/drupal-php:1.0.2
+    volumes_from: ["code"] 
+    volumes: 
+      - /vagrant/src/config/{{ item }}:/var/www/drupal/config/sync
+    links:
+      - "{{ item }}_db:drupal_db"
+  with_items: "{{ schools }}"

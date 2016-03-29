@@ -1,0 +1,37 @@
+#!/bin/bash
+export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
+
+# Treat this script just like you would drush (http://drushcommands.com/). Since
+# sites to not have individual file systems you should rely on aliases, which
+# are already set up.
+#
+# Examples:
+# 
+# drush @rbes --version
+# drush @bses en -t token
+
+if [ "$(expr substr $1 1 1)" = "@" ]
+then
+    # We have been given an alias.
+    #
+    # First we need to store the alias, but we will strip off the "@".
+    alias=${1:1}
+
+    # Then we need to remove the alias from the list of arguments, because it
+    # needs no further processing.
+    shift
+
+    # Now run the container in the alias' contenxt.
+    docker run \
+        --rm \
+        --volumes-from code \
+        -v /vagrant/src/config/${alias}:/var/www/drupal/config/sync \
+        --link ${alias}_db:drupal_db \
+        drush/drush \
+            --root=/var/www/drupal/web \
+            $@
+else
+    # We have not been given an alias, so we will try to run drush without any
+    # context.
+    docker run --rm -v $(pwd):/app drush/drush $@
+fi

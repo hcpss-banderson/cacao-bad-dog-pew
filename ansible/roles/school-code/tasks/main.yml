@@ -1,0 +1,31 @@
+---
+- name: Determine if we are using a dev version of the school code
+  stat: path={{ drupal_dev_path }}/composer.json
+  register: manifest
+  
+- name: Get dev version dependencies
+  command: composer install
+  args:
+    chdir: "{{ drupal_dev_path }}"
+    creates: "{{ drupal_dev_path }}/vendors"
+  when: manifest.stat.exists
+
+# The code container is generic and is shared by all the school sites. There
+# is no dev version of the code, so we use whatever is in the published 
+# docker image.
+- name: Start the code container
+  docker: 
+    image: banderson/schoolsite-code:{{ schoolsite_code_version }}
+    name: code
+    state: present
+  when: manifest.stat.exists == False
+
+# Just as above, we start the code container, but this time we mount the
+# local dev version of the code.
+- name: Start the code container with a copy of our dev code
+  docker: 
+    image: banderson/schoolsite-code:{{ schoolsite_code_version }}
+    name: code
+    state: present
+    volumes: ["{{ drupal_dev_path }}:/var/www/drupal"]
+  when: manifest.stat.exists

@@ -1,0 +1,19 @@
+---
+- name: POD WEB GACC
+  hosts: all
+  sudo: yes
+
+  vars:
+    schools:
+      - bses
+      - rbes
+    drupal_dev_path: /vagrant/src/docroot/drupal
+
+  roles:
+    - docker
+    - docker-py
+    - drupal-scripts
+    - drupal-databases
+    - drupal-php
+    - drupal-install
+    - drupal-server

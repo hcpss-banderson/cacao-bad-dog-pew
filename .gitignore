@@ -1,0 +1,19 @@
+# IDE files
+/nbproject
+
+# Vagrant files
+.vagrant
+
+# Ansible files
+*.retry
+
+# Ignore site configurations, which should have their own repos.
+/src/config/*
+!/src/config/README.md
+
+# Ignore dev version of the code
+/src/docroot/*
+
+# Ignore database dumps
+/src/databases/*
+!/src/databases/README.md

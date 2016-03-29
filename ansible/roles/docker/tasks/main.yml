@@ -1,0 +1,10 @@
+---
+- name: Add the docker repo key
+  apt_key: keyserver=hkp://p80.pool.sks-keyservers.net:80 id=58118E89F3A912897C070ADBF76221572C52609D
+
+- name: Add the docker repo
+  apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-trusty main'
+
+- name: Install docker
+  apt: name=docker-engine update_cache=yes
+  

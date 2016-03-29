@@ -1,0 +1,27 @@
+---
+- name: Start nginx proxy
+  docker:
+    state: reloaded
+    image: jwilder/nginx-proxy
+    name: nginx_proxy
+    volumes: ["/var/run/docker.sock:/tmp/docker.sock:ro"]
+    ports: ["80:80"]
+
+# Start the webservers.
+- name: Start the nginx containers
+  docker:
+    name: "{{ item.1 }}_nginx"
+    image: bander2/drupal-nginx:1.0.0
+    ports:
+      - 808{{ item.0 }}:80
+    volumes_from:
+      - code
+    links:
+      - "{{ item.1 }}_php:drupal_php"
+    env:
+      NGINX_ROOT: /var/www/drupal/web
+      NGINX_SERVER_NAME: "{{ item.1 }}.drupal.dev"
+      VIRTUAL_HOST: "{{ item.1 }}.drupal.dev"
+    volumes:
+      - /vagrant/src/config/{{ item.1 }}:/var/www/drupal/config/sync
+  with_indexed_items: "{{ schools }}"
