@@ -26,5 +26,5 @@
       # set up virtual hosts.
       VIRTUAL_HOST: "{{ item.1 }}.drupal.dev"
     volumes:
-      - /vagrant/src/config/{{ item.1 }}:/var/www/drupal/config/sync
+      - /vagrant/src/config/{{ item.1 }}/sync:/var/www/drupal/config/sync
   with_indexed_items: "{{ schools }}"

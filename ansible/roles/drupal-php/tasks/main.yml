@@ -6,7 +6,7 @@
     image: bander2/drupal-php:1.0.2
     volumes_from: ["code"] 
     volumes: 
-      - /vagrant/src/config/{{ item }}:/var/www/drupal/config/sync
+      - /vagrant/src/config/{{ item }}/sync:/var/www/drupal/config/sync
     links:
       - "{{ item }}_db:drupal_db"
   with_items: "{{ schools }}"

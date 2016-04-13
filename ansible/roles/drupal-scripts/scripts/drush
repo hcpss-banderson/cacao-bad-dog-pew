@@ -2,7 +2,7 @@
 export PATH=/sbin:/bin:/usr/sbin:/usr/bin:/usr/local/sbin:/usr/local/bin
 
 # Treat this script just like you would drush (http://drushcommands.com/). Since
-# sites to not have individual file systems you should rely on aliases, which
+# sites do not have individual file systems you should rely on aliases, which
 # are already set up.
 #
 # Examples:
@@ -25,7 +25,7 @@ then
     docker run \
         --rm \
         --volumes-from code \
-        -v /vagrant/src/config/${alias}:/var/www/drupal/config/sync \
+        -v /vagrant/src/config/${alias}/sync:/var/www/drupal/config/sync \
         --link ${alias}_db:drupal_db \
         drush/drush \
             --root=/var/www/drupal/web \
