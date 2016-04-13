@@ -1,0 +1,7 @@
+---
+schools:
+  - bses
+  - rbes
+drupal_dev_path: /vagrant/src/docroot/drupal
+sample_config: False
+sample_databases: False

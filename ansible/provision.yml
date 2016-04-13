@@ -1,19 +1,27 @@
 ---
-- name: POD WEB GACC
+- name: Cacao Bad Dog Pew
   hosts: all
   sudo: yes
 
-  vars:
-    schools:
-      - bses
-      - rbes
-    drupal_dev_path: /vagrant/src/docroot/drupal
-
   roles:
+    # Prerequisites
     - docker
     - docker-py
     - drupal-scripts
+
+    # Option sample data
+    - role: sample-config
+      when: sample_config is defined and sample_config == True
+    - role: sample-databases
+      when: sample_databases is defined and sample_databases == True
+
+    # Determine what the school codes are by looking at the contents of
+    # src/config.
+    - school-get-ids
+
+    # Docker containers
     - drupal-databases
+    - school-code
     - drupal-php
     - drupal-install
     - drupal-server

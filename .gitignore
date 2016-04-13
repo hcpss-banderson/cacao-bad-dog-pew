@@ -17,3 +17,6 @@
 # Ignore database dumps
 /src/databases/*
 !/src/databases/README.md
+
+# Ignore the parameters file
+parameters.yml

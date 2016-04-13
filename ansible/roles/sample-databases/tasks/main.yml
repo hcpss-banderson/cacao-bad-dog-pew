@@ -1,0 +1,8 @@
+---
+- name: Download the databases
+  get_url:
+    url: https://github.com/hcpss-banderson/{{ item }}-database/blob/master/{{ item }}.sql.gz?raw=true
+    dest: /vagrant/src/databases/{{ item }}.sql.gz
+  with_items:
+    - bses
+    - rbes

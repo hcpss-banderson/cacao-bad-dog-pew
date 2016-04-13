@@ -124,3 +124,13 @@ that it will be used instead.
 
 Dependencies will be installed durring provisioning so it is not necessary to do
 that first.
+
+## Usage
+
+Copy parameters.dist to parameters.yml and edit it to your taste.
+
+Run:
+
+```
+$ vagrant up
+```

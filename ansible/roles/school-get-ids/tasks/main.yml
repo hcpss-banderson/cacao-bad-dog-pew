@@ -1,0 +1,8 @@
+---
+- shell: ls -d */ | cut -f1 -d'/'
+  args:
+    chdir: /vagrant/src/config
+  register: ids
+
+- set_fact:
+    schools: ids.stdout_lines
