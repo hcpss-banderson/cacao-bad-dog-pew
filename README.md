@@ -72,59 +72,6 @@ generic code + bses config                 = empty bses website
              + cres config + cres database = full cres website
 ```
 
-## Structure
-
-```
-ansible/
-src/
-  config/
-    bses/
-    rbes/
-    ...
-  databases/
-    bses.sql.gz
-    rbes.sql.gz
-    ...
-  docroot/
-    Dockerfile
-    drupal/
-      composer.json
-      ...
-```
-
-### ansible
-
-The *ansible* directory is obviously for provisioning. It contains a playbook
-called *provision.yml*. Inspecting it and the contained roles will tell you
-exactly how the VM works.
-
-### src
-
-Contains everything not related to the VM.
-
-#### config
-
-This directory is empty in the repo and ignored by git. It is where you will
-put website configurations. Choose an identifier for the site and place the
-configuration in a directory named after it.
-
-#### databases
-
-Optionally, if you place database dumps here named
-`<identifier-you-chose-above>.sql.gz` they will be imported when provisioning
-the vm. If there is no database dump for a corrosponding configuration, then the
-site will be installed fresh using only the configuration.
-
-#### docroot
-
-Optional. This can either be blank or it can contain the drupal source code. If
-it is blank the source code from the producion docker image will be used. If it
-contains drupal source code it will be mounted to the production docker image so
-that it will be used instead.
-
-Dependencies will be installed durring provisioning so it is not necessary to do
-that first.
-
 ## Usage
 
 Copy parameters.dist to parameters.yml and edit it to your taste.
