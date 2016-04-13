@@ -74,10 +74,9 @@ generic code + bses config                 = empty bses website
 
 ## Usage
 
-Copy parameters.dist to parameters.yml and edit it to your taste.
-
-Run:
-
-```
-$ vagrant up
-```
+1. Copy parameters.dist to parameters.yml and edit it to your taste.
+2. Place drupal configuration yaml files in `src/config/<site-identifier>/`.
+3. Optionally, put database dumps in `src/databases/<site-identifier>.sql.gz`.
+4. Optionaly place drupal project source code in `src/docroot/` so that it's
+composer file is at `src/docroot/drupal/composer.json`.
+5. Run `$ vagrant up`
