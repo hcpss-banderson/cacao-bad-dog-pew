@@ -51,8 +51,8 @@ But I am unsure of how best to handle the Drupal source code itself. Should it
 be in this repository with a VM? Or should it be seperated because development
 happening on the dev environment VM is not pertinent to the code itself? I think
 I just talked myself into keeping it out of this repo. I don't want to see a
-commit like `Configure the token module` next to one like `Increase the memory
-of the VM to avoid crashing`.
+commit like *Configure the token module* next to one like *Increase the memory
+of the VM to avoid crashing*.
 
 ### Composer
 
@@ -90,11 +90,28 @@ the Drupal UI. When you are ready to commit them you can export the changes with
 this command:
 
 ```
-drush @<site-identifier> cex -y
+$ drush @<site-identifier> config-export -y
 ```
 
 Then you will see the changes in your git repository. You should then commit
-and push them fro there.
+and push them from there.
+
+Deploying that is outside the scope of this project, but should not be too
+difficult to set up. Once the new configuration has been deployed to the remote
+server, it can be imported like this:
+
+```
+$ drush config-import
+```
+
+### Commiting Changes to Code
+
+I have created a [sample repository][schoolsite-code] to illustrate how the code
+base should be set up. This project assumes the codebase matches that repository
+and the file structure of the resulting docker image. Changes to the code should
+be handled in a similar repository and should be shipped as a docker image.
+
+[schoolsite-code]: https://github.com/hcpss-banderson/schoolsite-code
 
 ## Misc
 
