@@ -21,6 +21,9 @@
     env:
       NGINX_ROOT: /var/www/drupal/web
       NGINX_SERVER_NAME: "{{ item.1 }}.drupal.dev"
+
+      # This environment variable works with the jwilder/nginx-proxy image to
+      # set up virtual hosts.
       VIRTUAL_HOST: "{{ item.1 }}.drupal.dev"
     volumes:
       - /vagrant/src/config/{{ item.1 }}:/var/www/drupal/config/sync
