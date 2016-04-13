@@ -74,9 +74,44 @@ generic code + bses config                 = empty bses website
 
 ## Usage
 
+### Provisioning
+
 1. Copy parameters.dist to parameters.yml and edit it to your taste.
 2. Place drupal configuration yaml files in `src/config/<site-identifier>/`.
 3. Optionally, put database dumps in `src/databases/<site-identifier>.sql.gz`.
 4. Optionaly place drupal project source code in `src/docroot/` so that it's
 composer file is at `src/docroot/drupal/composer.json`.
 5. Run `$ vagrant up`
+
+### Commiting Changes to Config
+
+Making changes to the configuration is easy, you can just make your changes in
+the Drupal UI. When you are ready to commit them you can export the changes with
+this command:
+
+```
+drush @<site-identifier> cex -y
+```
+
+Then you will see the changes in your git repository. You should then commit
+and push them fro there.
+
+## Misc
+
+### Drush
+
+Drush is configured to run within a docker container but be completly
+transparent. Pseudo aliases work on the fly to target your various sites.
+
+So, imagine that we had a site called `bses`. Running this command would rebuild
+the cache:
+
+```
+$ drush @bses cache-rebuild
+```
+
+For more information see:
+
+[ansible/roles/drupal-scripts/scripts/drush][drush-source]
+
+[drush-source]: ansible/roles/drupal-scripts/scripts/drush
