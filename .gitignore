@@ -1,5 +1,9 @@
 # IDE files
 /nbproject
+.project
+
+# OSX dumb file
+.DS_Store
 
 # Vagrant files
 .vagrant
