@@ -1,4 +1,23 @@
 ---
+# These school configurations will be pulled from the docker hub repository
+# called banderson/{{ remote_school }}_config. So, make sure the repo exists.
+# The ones that exist now are bses and rbes.
 remote_schools: ["bses", "rbes"]
+
+# Do not define this variable. I just want to document it's existence here. The
+# school-get-local-ids role calculates this variable by inspecting the contents
+# of /vagrant/src/config. Any directories at that location will be defined as
+# local_schools.
+#
+# IMPORTANT: If the same school is determined to be both "local" and "remote"
+# the local version is what is used.
+# 
+# local_schools: ["rhhs", "cres", "mwms"]
+
+# As mentioned above if the same school is determined to be both local and 
+# remote (that is to say, you defined it as remote and there is also a directory 
+# with it's name in /vagrant/src/config), the local version is what is used.
+# The ignore_local_schools variable explicitly overrides that and tells ansible 
+# to ignore some local schools so that the remote version is used even though a 
+# local version is present.
 ignore_local_schools: []
-drupal_dev_path: /vagrant/src/docroot/drupal

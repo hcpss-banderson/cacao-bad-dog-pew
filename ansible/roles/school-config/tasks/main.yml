@@ -5,6 +5,17 @@
   docker: image=banderson/{{ item }}-config name={{ item }}_config state=present
   with_items: "{{ remote_schools | difference(local_schools) }}"
 
+# If the configuration is local, start a container and mount the config.
+# 
+# Dependency note: We are using the same base image as the 
+# banderson/{{ school_code }}-config image and we are mounting a volume in the 
+# same way it does. All this requires us to know quite a bit about that image.
+# Maybe it would be better to use a specific base image like 
+# banderson/hcpss-config for all config containers.
+# 
+# Then (I don't know if this part is possible), what is we could define in the
+# banderson/hcpss-config image that a volume must be mounted to 
+# /var/www/drupal/config/sync? Then the process would be better documented.
 - name: Start the local config containers
   docker: 
     image: debian:jessie

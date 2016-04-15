@@ -3,6 +3,9 @@
   hosts: all
   sudo: yes
 
+  vars:
+    drupal_dev_path: /vagrant/src/docroot/drupal
+
   roles:
     # Prerequisites
     - docker
