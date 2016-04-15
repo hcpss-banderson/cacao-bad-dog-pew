@@ -6,7 +6,7 @@
     image: bander2/drupal-mysql:1.0.0
     state: reloaded
     env: { MYSQL_ROOT_PASSWORD: root }
-  with_items: "{{ schools }}"
+  with_items: "{{ all_schools }}"
 
 # This makes me sad :( but we need to wait for the database container to be
 # able to accept mysql connections before we can continue. I am sure there
@@ -18,10 +18,10 @@
 - name: Make sure the drupal db is absent
   command: "docker exec {{ item }}_db mysql -u root -proot \
     -e 'DROP DATABASE IF EXISTS `drupal`;'"
-  with_items: "{{ schools }}"
+  with_items: "{{ all_schools }}"
 
 # Make a database user.
 - name: Make sure we have a drupal user
   command: docker exec {{ item }}_db mysql -u root -proot \
     -e "GRANT ALL ON `drupal`.* to 'drupal'@'%' IDENTIFIED BY 'drupal';"
-  with_items: "{{ schools }}"
+  with_items: "{{ all_schools }}"

@@ -1,7 +1,7 @@
 ---
 - name: See if we have databases to import
   stat: path=/vagrant/src/databases/{{ item }}.sql.gz
-  with_items: "{{ schools }}"
+  with_items: "{{ all_schools }}"
   register: dbimports
 
 # Install Drupal via drush. Notice that we are using the config_installer

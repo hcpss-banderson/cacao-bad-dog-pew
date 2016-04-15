@@ -1,7 +1,4 @@
 ---
-schools:
-  - bses
-  - rbes
+remote_schools: ["bses", "rbes"]
+ignore_local_schools: []
 drupal_dev_path: /vagrant/src/docroot/drupal
-sample_config: False
-sample_databases: False

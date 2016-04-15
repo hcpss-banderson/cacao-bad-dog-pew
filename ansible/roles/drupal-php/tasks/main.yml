@@ -4,9 +4,7 @@
   docker:
     name: "{{ item }}_php"
     image: bander2/drupal-php:1.0.2
-    volumes_from: ["code"] 
-    volumes: 
-      - /vagrant/src/config/{{ item }}/sync:/var/www/drupal/config/sync
+    volumes_from: ["code", "{{ item }}_config"]
     links:
       - "{{ item }}_db:drupal_db"
-  with_items: "{{ schools }}"
+  with_items: "{{ all_schools }}"

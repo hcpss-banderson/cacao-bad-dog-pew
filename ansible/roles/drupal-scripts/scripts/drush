@@ -25,7 +25,7 @@ then
     docker run \
         --rm \
         --volumes-from code \
-        -v /vagrant/src/config/${alias}/sync:/var/www/drupal/config/sync \
+        --volumes-from ${alias}_config \
         --link ${alias}_db:drupal_db \
         drush/drush \
             --root=/var/www/drupal/web \

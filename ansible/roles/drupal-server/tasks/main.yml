@@ -16,6 +16,7 @@
       - 808{{ item.0 }}:80
     volumes_from:
       - code
+      - "{{ item.1 }}_config"
     links:
       - "{{ item.1 }}_php:drupal_php"
     env:
@@ -25,6 +26,4 @@
       # This environment variable works with the jwilder/nginx-proxy image to
       # set up virtual hosts.
       VIRTUAL_HOST: "{{ item.1 }}.drupal.dev"
-    volumes:
-      - /vagrant/src/config/{{ item.1 }}/sync:/var/www/drupal/config/sync
-  with_indexed_items: "{{ schools }}"
+  with_indexed_items: "{{ all_schools }}"

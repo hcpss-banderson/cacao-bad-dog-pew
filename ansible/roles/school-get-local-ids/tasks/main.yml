@@ -1,0 +1,11 @@
+---
+- shell: ls -d */ | cut -f1 -d'/'
+  args:
+    chdir: /vagrant/src/config
+  register: ids
+
+- set_fact:
+    local_schools: "{{ ids.stdout_lines | difference(ignore_local_schools) }}"
+    
+- set_fact:
+    all_schools: "{{ local_schools | union(remote_schools) }}"

@@ -1,0 +1,15 @@
+---
+# Get the remote configuration containers. We only want the ones that are not
+# also local.
+- name: Start the remote config containers
+  docker: image=banderson/{{ item }}-config name={{ item }}_config state=present
+  with_items: "{{ remote_schools | difference(local_schools) }}"
+
+- name: Start the local config containers
+  docker: 
+    image: debian:jessie
+    name: "{{ item }}_config"
+    state: present
+    volumes: /vagrant/src/config/{{ item }}/sync:/var/www/drupal/config/sync
+  with_items: "{{ local_schools }}"
+  
