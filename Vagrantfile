@@ -19,7 +19,7 @@ Vagrant.configure(2) do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"
     vb.customize ["modifyvm", :id, "--cpus", 4]
-    vb.name = "POD WEB GACC"
+    vb.name = "Cacao Bad Dog Pew"
   end
 
   config.ssh.forward_agent = true
